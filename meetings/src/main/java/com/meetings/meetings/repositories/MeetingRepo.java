@@ -10,12 +10,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MeetingRepo extends JpaRepository<Meeting, Integer> {
-    void deleteById(String id);
-
-    Meeting findById(String id);
+public interface MeetingRepo extends JpaRepository<Meeting, String> {
 
     List<Meeting> findByMeetingStatus(MeetingStatus status);
 
     List<Meeting> findByPlace(String place);
+
+    void addComment(String meetingId, String comment);
+
+    @Query(value = "SELECT * FROM meeting WHERE created_by = ?1 OR invited_user = ?1", nativeQuery = true)
+    List<Meeting> findMeetingsWhereUserParticipates(String userId);
+
 }

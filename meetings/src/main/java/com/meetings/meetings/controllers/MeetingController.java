@@ -1,50 +1,50 @@
 package com.meetings.meetings.controllers;
 
+import com.meetings.meetings.PerRequestIdStorage;
 import com.meetings.meetings.models.Meeting;
 import com.meetings.meetings.services.MeetingService;
-import com.meetings.meetings.type.MeetingStatus;
+import com.meetings.meetings.transports.MeetingListTransport;
+import com.meetings.meetings.transports.MeetingTransport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/meetings")
 public class MeetingController {
 
     @Autowired
-    private MeetingService service;
-
-    @PostMapping("/")
-    public Meeting addMeeting(@RequestBody Meeting meeting) {
-        return service.saveMeeting(meeting);
-    }
+    private MeetingService meetingService;
 
     @GetMapping("/{id}")
     public Meeting findMeetingById(@PathVariable String id) {
-        return service.getMeetingById(id);
+        return meetingService.getMeetingById(id);
     }
 
-    @GetMapping
-    public List<Meeting> findMeetingsByStatus(@RequestParam("status") String status) {
-        return service.getMeetingsByStatus(status);
+    @GetMapping("/")
+    public MeetingListTransport getMeetingsByUserId() {
+        return meetingService.getMeetingsByUserId(PerRequestIdStorage.getUserId());
     }
 
-    @GetMapping("/place")
-    public List<Meeting> findMeetingsByPlace(@RequestParam("place") String place) {
-        return service.getMeetingsByPlace(place);
+    @PostMapping("/")
+    public MeetingTransport addMeeting(@RequestBody Meeting meeting) {
+        return meetingService.saveMeeting(meeting);
     }
 
-    @PutMapping("/{id}")
-    public Meeting updateMeeting(@PathVariable String id, @RequestBody Meeting meeting) {
-        return service.updateMeeting(id, meeting);
+    @PutMapping("/{meetingId}")
+    public MeetingTransport updateMeeting(@PathVariable String meetingId, @RequestBody MeetingTransport meetingTransport) {
+        return meetingService.updateMeeting(meetingId, meetingTransport);
+    }
+
+    @PutMapping("/{meetingId}/comment")
+    public void addComment(@PathVariable String meetingId, @RequestBody MeetingTransport meetingTransport) {
+        meetingService.addComment(meetingId, meetingTransport);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/{id}")
-    public void deleteMeeting(@PathVariable String id) {
-        service.deleteMeeting(id);
+    @DeleteMapping("/{meetingId}")
+    public void deleteMeeting(@PathVariable String meetingId) {
+        meetingService.deleteMeeting(meetingId);
     }
+
 }

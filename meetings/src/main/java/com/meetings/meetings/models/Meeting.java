@@ -51,7 +51,7 @@ public class Meeting {
     private MeetingStatus meetingStatus = MeetingStatus.PENDING;
 
     @Column(name = "created_by")
-    private Integer createdBy;
+    private MeetingUser createdBy;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "invited_user")
@@ -124,11 +124,11 @@ public class Meeting {
         this.meetingStatus = meetingStatus;
     }
 
-    public Integer getCreatedBy() {
+    public MeetingUser getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(MeetingUser createdBy) {
         this.createdBy = createdBy;
     }
 
