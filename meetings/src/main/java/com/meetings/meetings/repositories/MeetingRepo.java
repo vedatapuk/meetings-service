@@ -16,8 +16,6 @@ public interface MeetingRepo extends JpaRepository<Meeting, String> {
 
     List<Meeting> findByPlace(String place);
 
-    void addComment(String meetingId, String comment);
-
     @Query(value = "SELECT * FROM meeting WHERE created_by = ?1 OR invited_user = ?1", nativeQuery = true)
     List<Meeting> findMeetingsWhereUserParticipates(String userId);
 

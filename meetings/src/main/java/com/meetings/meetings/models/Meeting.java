@@ -50,7 +50,8 @@ public class Meeting {
     @Column(name = "meeting_status")
     private MeetingStatus meetingStatus = MeetingStatus.PENDING;
 
-    @Column(name = "created_by")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "created_by")
     private MeetingUser createdBy;
 
     @ManyToOne(cascade = CascadeType.ALL)

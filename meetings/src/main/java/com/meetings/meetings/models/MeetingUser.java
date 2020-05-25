@@ -8,10 +8,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Table(name = "meetinguser")
+@Table(name = "meeting_user")
 public class MeetingUser {
 
     @Id
