@@ -13,8 +13,6 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "meeting")
 public class Meeting {
@@ -22,7 +20,7 @@ public class Meeting {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "meeting_id", columnDefinition = "VARCHAR(255)")
+    @Column(name = "id", columnDefinition = "NVARCHAR(36)")
     private String id;
 
     @Column(name = "title")
@@ -50,16 +48,33 @@ public class Meeting {
     @Column(name = "meeting_status")
     private MeetingStatus meetingStatus = MeetingStatus.PENDING;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "created_by")
     private MeetingUser createdBy;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "invited_user")
     private MeetingUser invitedUser;
 
     @Column(name = "comment")
     private String comment;
+
+    public Meeting() {
+
+    }
+
+    public Meeting(String title, Timestamp startTime, Timestamp endTime, String place, String description, Boolean online, MeetingStatus meetingStatus, MeetingUser createdBy, MeetingUser invitedUser, String comment) {
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.place = place;
+        this.description = description;
+        this.online = online;
+        this.meetingStatus = meetingStatus;
+        this.createdBy = createdBy;
+        this.invitedUser = invitedUser;
+        this.comment = comment;
+    }
 
     public String getId() {
         return id;

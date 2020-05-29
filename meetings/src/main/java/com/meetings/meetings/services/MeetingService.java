@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MeetingService {
 
-    MeetingTransport saveMeeting(Meeting meeting);
+    MeetingTransport saveMeeting(MeetingTransport meetingTransport);
 
     Meeting getMeetingById(String id);
 
@@ -22,7 +22,7 @@ public interface MeetingService {
 
     MeetingTransport updateMeeting(String id, MeetingTransport meetingTransport);
 
-    void addComment(String meetingId, MeetingTransport meetingTransport);
+    MeetingTransport updateComment(String meetingId, MeetingTransport meetingTransport);
 
-    MeetingListTransport getMeetingsByUserId(String userId);
+    List<Meeting> getMeetingsByUserId(String userId);
 }

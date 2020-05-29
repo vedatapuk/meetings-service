@@ -11,14 +11,18 @@ public class MeetingTransport {
     private String place;
     private String description;
     private boolean online;
-    private String meetingStatus;
-    private MeetingUserTransport createdBy;
-    private MeetingUserTransport invitedUser;
+    private String meetingStatus = "PENDING";
+    private String createdBy;
+    private String invitedUser;
     private String comment;
 
+    public MeetingTransport() {
+
+    }
+
     public MeetingTransport(String title, Timestamp startTime, Timestamp endTime, String place, String description,
-                         boolean online, String meetingStatus, MeetingUserTransport createdBy, MeetingUserTransport invitedUser,
-                         String comment) {
+                            boolean online, String meetingStatus, String createdBy, String invitedUser,
+                            String comment) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -32,8 +36,8 @@ public class MeetingTransport {
     }
 
     public MeetingTransport(String id, String title, Timestamp startTime, Timestamp endTime, String place, String description,
-                         boolean online, String meetingStatus, MeetingUserTransport createdBy, MeetingUserTransport invitedUser,
-                         String comment) {
+                            boolean online, String meetingStatus, String createdBy, String invitedUser,
+                            String comment) {
         this.id = id;
         this.title = title;
         this.startTime = startTime;
@@ -111,19 +115,19 @@ public class MeetingTransport {
         this.meetingStatus = meetingStatus;
     }
 
-    public MeetingUserTransport getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(MeetingUserTransport createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 
-    public MeetingUserTransport getInvitedUser() {
+    public String getInvitedUser() {
         return invitedUser;
     }
 
-    public void setInvitedUser(MeetingUserTransport invitedUser) {
+    public void setInvitedUser(String invitedUser) {
         this.invitedUser = invitedUser;
     }
 

@@ -11,6 +11,8 @@ import com.meetings.meetings.type.MeetingStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -25,9 +27,10 @@ public class MeetingServiceImpl implements MeetingService{
     private MeetingUserService meetingUserService;
 
     @Override
-    public MeetingTransport saveMeeting(Meeting meeting) {
-        MeetingUser meetingCreator = meetingUserService.getMeetingUserById(PerRequestIdStorage.getUserId());
-        meeting.setCreatedBy(meetingCreator);
+    public MeetingTransport saveMeeting(MeetingTransport meetingTransport) {
+        MeetingUser createdBy = meetingUserService.getMeetingUserById(PerRequestIdStorage.getUserId());
+        MeetingUser invitedUser = meetingUserService.getMeetingUserById(meetingTransport.getInvitedUser());
+        Meeting meeting = MeetingMapper.meetingTransportToMeeting(createdBy, invitedUser, meetingTransport);
         return MeetingMapper.meetingToMeetingTransport(meetingRepository.save(meeting));
     }
 
@@ -55,6 +58,7 @@ public class MeetingServiceImpl implements MeetingService{
         return null;
     }
 
+    @Transactional
     @Override
     public void deleteMeeting(String id) {
         meetingRepository.deleteById(id);
@@ -62,30 +66,29 @@ public class MeetingServiceImpl implements MeetingService{
 
     @Override
     public MeetingTransport updateMeeting(String meetingId, MeetingTransport meetingTransport) {
-        Meeting meeting = getMeetingById(meetingId);
-        meeting.setTitle(meetingTransport.getTitle());
-        meeting.setStartTime(meetingTransport.getStartTime());
-        meeting.setEndTime(meetingTransport.getEndTime());
-        meeting.setPlace(meetingTransport.getPlace());
-        meeting.setDescription(meetingTransport.getDescription());
-        meeting.setOnline(meetingTransport.isOnline());
-        meeting.setMeetingStatus(MeetingStatus.valueOf(meetingTransport.getMeetingStatus()));
+        MeetingUser createdBy = meetingUserService.getMeetingUserById(meetingTransport.getCreatedBy());
+        MeetingUser invitedUser = meetingUserService.getMeetingUserById(meetingTransport.getInvitedUser());
+        Meeting meeting = MeetingMapper.meetingTransportToMeeting(createdBy, invitedUser, meetingTransport);
         return MeetingMapper.meetingToMeetingTransport(meetingRepository.save(meeting));
     }
 
     @Override
-    public void addComment(String meetingId, MeetingTransport meetingTransport) {
+    public MeetingTransport updateComment(String meetingId, MeetingTransport meetingTransport) {
         String comment = meetingTransport.getComment();
         Meeting meeting = getMeetingById(meetingTransport.getId());
         meeting.setComment(comment);
-        meetingRepository.save(meeting);
+        return MeetingMapper.meetingToMeetingTransport(meetingRepository.save(meeting));
     }
 
     @Override
-    public MeetingListTransport getMeetingsByUserId(String userId) {
-        List<Meeting> meetings = meetingRepository.findMeetingsWhereUserParticipates(userId);
-        List<MeetingTransport> meetingUserTransports = meetings.stream().map(MeetingMapper::meetingToMeetingTransport).collect(Collectors.toList());
-        return new MeetingListTransport(meetingUserTransports);
+    public List<Meeting> getMeetingsByUserId(String userId) {
+        List<Meeting> meetings = new ArrayList<>();
+        MeetingUser meetingUser = meetingUserService.getMeetingUserById(userId);
+        List<Meeting> meetingsCreated = meetingUser.getMeetingsCreated();
+        List<Meeting> meetingsInvited = meetingUser.getMeetingsInvited();
+        meetings.addAll(meetingsCreated);
+        meetings.addAll(meetingsInvited);
+        return meetings;
     }
 
 }
