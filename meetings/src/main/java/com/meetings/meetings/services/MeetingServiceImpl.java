@@ -1,6 +1,7 @@
 package com.meetings.meetings.services;
 
 import com.meetings.meetings.PerRequestIdStorage;
+import com.meetings.meetings.integration.producers.MeetingProducer;
 import com.meetings.meetings.mappers.MeetingMapper;
 import com.meetings.meetings.models.Meeting;
 import com.meetings.meetings.models.MeetingUser;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +29,17 @@ public class MeetingServiceImpl implements MeetingService{
     @Autowired
     private MeetingUserService meetingUserService;
 
+    @Autowired
+    private MeetingProducer meetingProducer;
+
     @Override
     public MeetingTransport saveMeeting(MeetingTransport meetingTransport) {
         MeetingUser createdBy = meetingUserService.getMeetingUserById(PerRequestIdStorage.getUserId());
         MeetingUser invitedUser = meetingUserService.getMeetingUserById(meetingTransport.getInvitedUser());
         Meeting meeting = MeetingMapper.meetingTransportToMeeting(createdBy, invitedUser, meetingTransport);
-        return MeetingMapper.meetingToMeetingTransport(meetingRepository.save(meeting));
+        Meeting savedMeeting = meetingRepository.save(meeting);
+        meetingProducer.sendNewMeeting(savedMeeting);
+        return MeetingMapper.meetingToMeetingTransport(savedMeeting);
     }
 
     public List<Meeting> getAllMeetings() {
@@ -83,13 +90,15 @@ public class MeetingServiceImpl implements MeetingService{
 
     @Override
     public List<Meeting> getMeetingsByUserId(String userId) {
-        List<Meeting> meetings = new ArrayList<>();
-        MeetingUser meetingUser = meetingUserService.getMeetingUserById(userId);
-        List<Meeting> meetingsCreated = meetingUser.getMeetingsCreated();
-        List<Meeting> meetingsInvited = meetingUser.getMeetingsInvited();
-        meetings.addAll(meetingsCreated);
-        meetings.addAll(meetingsInvited);
-        return meetings;
+//        List<Meeting> meetings = new ArrayList<>();
+//        MeetingUser meetingUser = meetingUserService.getMeetingUserById(userId);
+//        List<Meeting> meetingsCreated = meetingUser.getMeetingsCreated();
+//        List<Meeting> meetingsInvited = meetingUser.getMeetingsInvited();
+//        meetings.addAll(meetingsCreated);
+//        meetings.addAll(meetingsInvited);
+//        return meetings;
+        meetingProducer.sendNewMeeting(null);
+        return null;
     }
 
     @Override

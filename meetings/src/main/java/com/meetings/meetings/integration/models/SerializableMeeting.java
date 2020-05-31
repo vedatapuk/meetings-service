@@ -17,8 +17,8 @@ public final class SerializableMeeting implements Serializable {
 
     public SerializableMeeting(@JsonProperty("id") String id,
                                @JsonProperty("title")String title,
-                               @JsonProperty("startTime")long startTime,
-                               @JsonProperty("endTime")long endTime,
+                               @JsonProperty("startTime") long startTime,
+                               @JsonProperty("endTime") long endTime,
                                @JsonProperty("place")String place,
                                @JsonProperty("description")String description,
                                @JsonProperty("createdBy") String createdBy,
@@ -63,6 +63,20 @@ public final class SerializableMeeting implements Serializable {
 
     public String getInvitedParticipant() {
         return invitedParticipant;
+    }
+
+    @Override
+    public String toString() {
+        return "SerializableMeeting{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", place='" + place + '\'' +
+                ", description='" + description + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", invitedParticipant='" + invitedParticipant + '\'' +
+                '}';
     }
 
 }

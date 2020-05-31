@@ -39,8 +39,8 @@ public class MeetingNotificationJobs {
             String content = "Hello there\n\nThis is just a reminder about the meeting between " + meetingCreatorFullName + " and " + meetingInvitedParticipantFullName
                     + " that is going to happen at " + meeting.getStartTime().toLocalDateTime().toString() + ", with location " + meeting.getPlace() + ".\n\n" +
                     "Best regards,\n\nEducation Management System Developers";
-//            emailProducer.produce(new SerializableEmail(meetingCreatorEmail, subject, content));
-//            emailProducer.produce(new SerializableEmail(meetingInvitedParticipantEmail, subject, content));
+            emailProducer.produce(new SerializableEmail(meetingCreatorEmail, subject, content));
+            emailProducer.produce(new SerializableEmail(meetingInvitedParticipantEmail, subject, content));
         }
     }
 

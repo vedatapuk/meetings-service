@@ -14,6 +14,11 @@ public class QueuesConfiguration {
     @Value("${queue.user.new.teacher}")
     private String newTeachersQueueName;
 
+    @Value("${queue.meeting.new.online}")
+    private String queueMeetingNewOnline;
+
+    @Value("${queue.meeting.new.offline}")
+    private String queueMeetingNewOffline;
 
 
     @Bean(name = "newParentsQueue")
@@ -26,6 +31,13 @@ public class QueuesConfiguration {
         return new Queue(newTeachersQueueName);
     }
 
-
+    @Bean(name = "newOnlineMeetingQueue")
+    public Queue newOnlineMeetingQueue() {
+        return new Queue(queueMeetingNewOnline);
+    }
+    @Bean(name = "newParentsQueue")
+    public Queue newOfflineMeetingQueue() {
+        return new Queue(queueMeetingNewOffline);
+    }
 
 }

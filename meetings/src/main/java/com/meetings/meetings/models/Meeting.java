@@ -63,6 +63,17 @@ public class Meeting {
 
     }
 
+    public Meeting(String id, String title, Timestamp startTime, Timestamp endTime, String place, String description, MeetingUser createdBy, MeetingUser invitedUser) {
+        this.id = id;
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.place = place;
+        this.description = description;
+        this.createdBy = createdBy;
+        this.invitedUser = invitedUser;
+    }
+
     public Meeting(String title, Timestamp startTime, Timestamp endTime, String place, String description, Boolean online, MeetingStatus meetingStatus, MeetingUser createdBy, MeetingUser invitedUser, String comment) {
         this.title = title;
         this.startTime = startTime;
