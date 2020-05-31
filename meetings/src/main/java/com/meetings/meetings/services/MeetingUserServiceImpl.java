@@ -18,7 +18,8 @@ public class MeetingUserServiceImpl implements MeetingUserService {
 
     @Override
     public void saveMeetingUser(MeetingUserTransport meetingUserTransport) {
-        MeetingUser meetingUser = new MeetingUser(meetingUserTransport.getId(), meetingUserTransport.getFirstName(), meetingUserTransport.getLastName());
+        MeetingUser meetingUser = new MeetingUser(meetingUserTransport.getId(), meetingUserTransport.getFirstName(), meetingUserTransport.getLastName(),
+                meetingUserTransport.getRole(), meetingUserTransport.getEmail());
         meetingUserRepo.save(meetingUser);
     }
 

@@ -2,6 +2,7 @@ package com.meetings.meetings.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,6 +21,12 @@ public class MeetingUser {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "role")
+    private String role;
+
+    @Column(name = "email")
+    private String email;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "createdBy")
@@ -49,6 +56,14 @@ public class MeetingUser {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public MeetingUser(String id, String firstName, String lastName, String role, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.email = email;
     }
 
     public String getId() {
@@ -90,4 +105,21 @@ public class MeetingUser {
     public void setMeetingsInvited(List<Meeting> meetingsInvited) {
         this.meetingsInvited = meetingsInvited;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }
