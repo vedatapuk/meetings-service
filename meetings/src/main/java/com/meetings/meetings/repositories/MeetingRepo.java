@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -18,5 +19,8 @@ public interface MeetingRepo extends JpaRepository<Meeting, String> {
 
     @Query(value = "SELECT * FROM meeting WHERE created_by = ?1 OR invited_user = ?1", nativeQuery = true)
     List<Meeting> findMeetingsWhereUserParticipates(String userId);
+
+    @Query(value = "SELECT * FROM meeting WHERE start_time >= ?1 AND end_time <= ?2", nativeQuery = true)
+    List<Meeting> findAllMeetingsBetweenTimes(Timestamp startTime, Timestamp endTime);
 
 }

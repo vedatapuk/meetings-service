@@ -3,7 +3,9 @@ package com.meetings.meetings.services;
 import com.meetings.meetings.models.Meeting;
 import com.meetings.meetings.transports.MeetingListTransport;
 import com.meetings.meetings.transports.MeetingTransport;
+import org.apache.logging.log4j.message.TimestampMessage;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface MeetingService {
@@ -25,4 +27,7 @@ public interface MeetingService {
     MeetingTransport updateComment(String meetingId, MeetingTransport meetingTransport);
 
     List<Meeting> getMeetingsByUserId(String userId);
+
+    List<Meeting> getAllMeetingsBetween(Timestamp startTime, Timestamp endTime);
+
 }

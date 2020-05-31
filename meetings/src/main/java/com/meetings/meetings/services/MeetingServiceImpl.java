@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -89,6 +90,11 @@ public class MeetingServiceImpl implements MeetingService{
         meetings.addAll(meetingsCreated);
         meetings.addAll(meetingsInvited);
         return meetings;
+    }
+
+    @Override
+    public List<Meeting> getAllMeetingsBetween(Timestamp startTime, Timestamp endTime) {
+        return meetingRepository.findAllMeetingsBetweenTimes(startTime, endTime);
     }
 
 }
