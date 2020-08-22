@@ -46,6 +46,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 - Mishel Canameri
 - Rinor Hajrizi
 - Vedat Apuk
+- Lumbardh Elshani
 ## Acknowledgements
 We would like to thank Mauro Caporuscio and Mirko D' Angelo for supervising and giving helpful suggestions and feedback throughout all phases of project lifecycle.
 ## License
