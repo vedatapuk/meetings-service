@@ -38,7 +38,7 @@ public class MeetingServiceImpl implements MeetingService{
         MeetingUser invitedUser = meetingUserService.getMeetingUserById(meetingTransport.getInvitedUser());
         Meeting meeting = MeetingMapper.meetingTransportToMeeting(createdBy, invitedUser, meetingTransport);
         Meeting savedMeeting = meetingRepository.save(meeting);
-        meetingProducer.sendNewMeeting(savedMeeting);
+//        meetingProducer.sendNewMeeting(savedMeeting);
         return MeetingMapper.meetingToMeetingTransport(savedMeeting);
     }
 
@@ -90,15 +90,15 @@ public class MeetingServiceImpl implements MeetingService{
 
     @Override
     public List<Meeting> getMeetingsByUserId(String userId) {
-//        List<Meeting> meetings = new ArrayList<>();
-//        MeetingUser meetingUser = meetingUserService.getMeetingUserById(userId);
-//        List<Meeting> meetingsCreated = meetingUser.getMeetingsCreated();
-//        List<Meeting> meetingsInvited = meetingUser.getMeetingsInvited();
-//        meetings.addAll(meetingsCreated);
-//        meetings.addAll(meetingsInvited);
-//        return meetings;
-        meetingProducer.sendNewMeeting(null);
-        return null;
+        List<Meeting> meetings = new ArrayList<>();
+        MeetingUser meetingUser = meetingUserService.getMeetingUserById(userId);
+        List<Meeting> meetingsCreated = meetingUser.getMeetingsCreated();
+        List<Meeting> meetingsInvited = meetingUser.getMeetingsInvited();
+        meetings.addAll(meetingsCreated);
+        meetings.addAll(meetingsInvited);
+        return meetings;
+//        meetingProducer.sendNewMeeting(null);
+//        return null;
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.meetings.meetings.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import java.util.List;
