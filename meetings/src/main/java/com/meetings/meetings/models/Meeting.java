@@ -1,6 +1,7 @@
 package com.meetings.meetings.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.meetings.meetings.annotations.ApiEntity;
 import com.meetings.meetings.type.MeetingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "meeting")
+@ApiEntity
 public class Meeting {
 
     @Id

@@ -1,7 +1,10 @@
 package com.meetings.meetings.transports;
 
+import com.meetings.meetings.annotations.ApiEntity;
+
 import java.util.List;
 
+@ApiEntity
 public class MeetingListTransport {
 
     private List<MeetingTransport> meetingTransports;

@@ -1,5 +1,8 @@
 package com.meetings.meetings.transports;
 
+import com.meetings.meetings.annotations.ApiEntity;
+
+@ApiEntity
 public class MeetingUserTransport {
 
     private String id;

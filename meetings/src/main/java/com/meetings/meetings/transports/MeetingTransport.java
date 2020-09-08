@@ -1,7 +1,10 @@
 package com.meetings.meetings.transports;
 
+import com.meetings.meetings.annotations.ApiEntity;
+
 import java.sql.Timestamp;
 
+@ApiEntity
 public class MeetingTransport {
 
     private String id;

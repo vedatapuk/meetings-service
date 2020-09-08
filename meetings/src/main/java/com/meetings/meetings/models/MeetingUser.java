@@ -1,6 +1,7 @@
 package com.meetings.meetings.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.meetings.meetings.annotations.ApiEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "meeting_user")
+@ApiEntity
 public class MeetingUser {
 
     @Id
